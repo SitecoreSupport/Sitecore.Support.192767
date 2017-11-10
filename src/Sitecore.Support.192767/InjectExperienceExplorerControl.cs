@@ -18,6 +18,10 @@ namespace Sitecore.Support.ExperienceExplorer.Business.Pipelines.Mvc.RenderPageE
     {
         protected override bool Render(TextWriter writer)
         {
+            if (!Context.IsLoggedIn)
+            {
+                PreviewManager.RestoreUser();
+            }
             if (string.IsNullOrEmpty(PreviewManager.GetShellUser()) || Context.Item == null || !SettingsHelper.ExperienceModePipelineEnabled || !SettingsHelper.IsEnabledForCurrentSite || !PageModeHelper.IsExperienceMode || Context.Site.DisplayMode != Sitecore.Sites.DisplayMode.Normal)
             {
                 return false;
